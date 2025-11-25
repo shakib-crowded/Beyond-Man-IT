@@ -32,7 +32,7 @@ module.exports.sendOtp = async (req, res) => {
     const otp = generateOTP();
 
     await redis.set(`otp:${email}`, JSON.stringify({ otp, attempts: 0 }), {
-      EX: 600,
+      ex: 600,
     });
 
     // Send email
@@ -130,7 +130,7 @@ module.exports.verifyOtp = async (req, res) => {
       storedOTPData.attempts += 1;
       // Update attempts
       await redis.set(`otp:${email}`, JSON.stringify(storedOTPData), {
-        EX: 600,
+        ex: 600,
       });
 
       const remaining = 3 - storedOTPData.attempts;
