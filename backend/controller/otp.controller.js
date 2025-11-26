@@ -10,6 +10,8 @@ const generateOTP = () => {
 module.exports.sendOtp = async (req, res) => {
   try {
     const { email, fullName } = req.body;
+    console.log("Email: ", email);
+    console.log("Full Name: ", fullName);
 
     if (!email || !fullName) {
       return res
@@ -25,6 +27,7 @@ module.exports.sendOtp = async (req, res) => {
     }
 
     const otp = generateOTP();
+    console.log("This is OTP: ", otp);
 
     // Save in Redis for 10 minutes
     await redis.set(`otp:${email}`, JSON.stringify({ otp, attempts: 0 }), {
@@ -63,6 +66,7 @@ module.exports.sendOtp = async (req, res) => {
       .status(200)
       .json({ success: true, message: "OTP sent successfully to your email" });
   } catch (error) {
+    console.log("This is Error: ", error);
     console.error("Send OTP Error:", error);
     return res.status(500).json({
       success: false,
