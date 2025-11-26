@@ -12,7 +12,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://agency.beyondman.dev", "http://localhost:5173"],
+    origin: [
+      "https://agency.beyondman.dev",
+      "https://beyond-man-it-rc3l.vercel.app/",
+      "http://localhost:5173",
+    ],
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
