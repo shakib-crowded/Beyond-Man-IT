@@ -28,7 +28,7 @@ module.exports.sendOtp = async (req, res) => {
 
     // Save in Redis for 10 minutes
     await redis.set(`otp:${email}`, JSON.stringify({ otp, attempts: 0 }), {
-      ex: 600, // Upstash uses "ex"
+      ex: 600,
     });
 
     // Send email
@@ -64,12 +64,10 @@ module.exports.sendOtp = async (req, res) => {
       .json({ success: true, message: "OTP sent successfully to your email" });
   } catch (error) {
     console.error("Send OTP Error:", error);
-    return res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to send OTP. Please try again later.",
-      });
+    return res.status(500).json({
+      success: false,
+      message: "Failed to send OTP. Please try again later.",
+    });
   }
 };
 
@@ -91,7 +89,7 @@ module.exports.verifyOtp = async (req, res) => {
         .json({ success: false, message: "OTP not found or expired." });
     }
 
-    const storedOTPData = JSON.parse(data);
+    const storedOTPData = data;
 
     // Too many attempts?
     if (storedOTPData.attempts >= 3) {
