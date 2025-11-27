@@ -33,7 +33,7 @@ module.exports.sendOtp = async (req, res) => {
 
     // Send email
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"BeyondMan IT" <noreply@beyondman.dev>`,
       to: email,
       subject: "Your OTP for Project Submission on Beyond Man IT",
       html: `

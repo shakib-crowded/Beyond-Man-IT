@@ -6,7 +6,7 @@ import DateAndTime from "../components/schedule-call/DateAndTime";
 import YourInformation from "../components/schedule-call/YourInformation";
 
 const API_BASE_URL =
-  import.meta.env.REACT_APP_API_URL || "http://localhost:5000";
+  import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:5000";
 
 export const ScheduleCallContext = createContext();
 
