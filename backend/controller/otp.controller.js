@@ -2,6 +2,14 @@ require("dotenv").config();
 const transporter = require("../utils/mailSender");
 const redis = require("../utils/redis");
 
+const Brevo = require("@getbrevo/brevo");
+
+const client = new Brevo.TransactionalEmailsApi();
+client.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
+
 // Generate 6-digit OTP
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
@@ -31,13 +39,11 @@ module.exports.sendOtp = async (req, res) => {
       ex: 600,
     });
 
-    // Send email
     const mailOptions = {
-      from: `"BeyondMan IT" <noreply@beyondman.dev>`,
-      to: email,
+      sender: { name: "BeyondMan IT", email: "noreply@beyondman.dev" },
+      to: [{ email }],
       subject: "Your OTP for Project Submission on Beyond Man IT",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      htmlContent: ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; color: white; border-radius: 10px 10px 0 0;">
             <h2 style="margin: 0; font-size: 24px;">Email Verification</h2>
           </div>
@@ -53,11 +59,37 @@ module.exports.sendOtp = async (req, res) => {
             </div>
             <p style="color: #666; font-size: 14px;">This OTP will expire in 10 minutes.</p>
           </div>
-        </div>
-      `,
+        </div>`,
     };
 
-    await transporter.sendMail(mailOptions);
+    // Send email
+
+    // const mailOptions = {
+    //   from: `"BeyondMan IT" <noreply@beyondman.dev>`,
+    //   to: email,
+    //   subject: "Your OTP for Project Submission on Beyond Man IT",
+    //   html: `
+    // <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+    //   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; color: white; border-radius: 10px 10px 0 0;">
+    //     <h2 style="margin: 0; font-size: 24px;">Email Verification</h2>
+    //   </div>
+    //   <div style="background: #f5f5f5; padding: 30px; border-radius: 0 0 10px 10px;">
+    //     <p style="color: #333; font-size: 16px;">Hi <strong>${fullName}</strong>,</p>
+    //     <p style="color: #666; font-size: 14px;">Use the OTP below to verify your email address.</p>
+    //     <div style="text-align: center; margin: 30px 0;">
+    //       <div style="display: inline-block; background: white; padding: 20px 40px; border-radius: 10px; border: 2px solid #667eea;">
+    //         <p style="font-size: 32px; font-weight: bold; color: #667eea; letter-spacing: 5px; margin:0">
+    //           ${otp}
+    //         </p>
+    //       </div>
+    //     </div>
+    //     <p style="color: #666; font-size: 14px;">This OTP will expire in 10 minutes.</p>
+    //   </div>
+    // </div>
+    //   `,
+    // };
+
+    await client.sendTransacEmail(mailOptions);
 
     return res
       .status(200)
