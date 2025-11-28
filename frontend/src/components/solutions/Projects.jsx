@@ -1,4 +1,5 @@
 import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Projects = ({ projects, setActiveProject }) => {
   return (
@@ -84,18 +85,14 @@ const Projects = ({ projects, setActiveProject }) => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                  <button
+                  <Link
+                    to={project.demoLink}
+                    target="_blank"
                     className={`flex-1 flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r ${project.gradient} text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300`}
                   >
-                    <span className="text-sm sm:text-base">
-                      View Case Study
-                    </span>
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
-                  <button className="flex-1 flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-slate-700/50 text-slate-300 font-semibold hover:bg-slate-700 border border-slate-600 hover:border-slate-500 transition-all duration-300">
                     <span className="text-sm sm:text-base">Live Demo</span>
                     <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

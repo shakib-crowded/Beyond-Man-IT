@@ -5,12 +5,12 @@ const ContactSocialLink = () => {
     {
       name: "LinkedIn",
       gradient: "from-blue-600 to-blue-700",
-      url: "https://linkedin.com/in/shakibansarideveloper",
+      url: "https://linkedin.com/company/agency-beyond-man",
     },
     {
       name: "Instagram",
       gradient: "from-purple-600 to-pink-600",
-      url: "https://instagram.com/shakib-crowded",
+      url: "https://instagram.com/beyondman.dev",
     },
   ];
   return (

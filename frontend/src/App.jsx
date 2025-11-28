@@ -22,6 +22,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Sitemap from "./pages/Sitemap";
 import NotFound from "./pages/NotFound";
+import WhatsAppButton from "./components/common/WhatsappButton";
 
 const App = () => {
   const location = useLocation();
@@ -92,6 +93,8 @@ const App = () => {
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>
+
+      <WhatsAppButton />
 
       {/* SHOW FOOTER ONLY IF NOT ADMIN PAGE */}
       {!hideLayout && <Footer />}
