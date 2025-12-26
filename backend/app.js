@@ -14,13 +14,15 @@ app.use(
   cors({
     origin: [
       "https://agency.beyondman.dev",
-      "https://beyond-man-it-rc3l.vercel.app/",
+      "https://beyond-man-it-rc3l.vercel.app",
       "http://localhost:5173",
     ],
-    methods: "GET,POST,PUT,DELETE,PATCH",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
 );
+// handle preflight
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
